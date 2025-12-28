@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weihnachtsgeschenk für Jenny</title>
+    <!-- Schriftarten -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome für Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset und Basis */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0a5c36 0%, #0c7c42 50%, #0a5c36 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Weihnachtsbaum-Hintergrund */
+        .christmas-tree-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+        
+        .christmas-tree {
+            position: absolute;
+            width: 400px;
+            height: 100vh;
+            bottom: 0;
+            background: 
+                /* Baumspitze */
+                radial-gradient(circle at 200px 100px, #2d6a4f 10px, transparent 11px),
+                /* Baumebenen */
+                linear-gradient(to bottom, transparent 100px, #2d6a4f 100px, #2d6a4f 140px, transparent 140px),
+                linear-gradient(to bottom, transparent 140px, #2d6a4f 140px, #2d6a4f 180px, transparent 180px),
+                linear-gradient(to bottom, transparent 180px, #2d6a4f 180px, #2d6a4f 220px, transparent 220px),
+                linear-gradient(to bottom, transparent 220px, #2d6a4f 220px, #2d6a4f 260px, transparent 260px),
+                linear-gradient(to bottom, transparent 260px, #2d6a4f 260px, #2d6a4f 300px, transparent 300px),
+                /* Stamm */
+                linear-gradient(to bottom, transparent 300px, #8B4513 300px, #8B4513 350px, transparent 350px);
+            opacity: 0.15;
+        }
+        
+        /* Christkugeln am Baum */
+        .christmas-ornaments {
+            position: absolute;
+            width: 400px;
+            height: 100vh;
+            bottom: 0;
+        }
+        
+        .ornament {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            animation: twinkle 3s infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+        
+        .ornament.red { background: #ff0000; box-shadow: 0 0 10px #ff0000; }
+        .ornament.gold { background: #ffd700; box-shadow: 0 0 10px #ffd700; }
+        .ornament.silver { background: #c0c0c0; box-shadow: 0 0 10px #c0c0c0; }
+        .ornament.blue { background: #4169e1; box-shadow: 0 0 10px #4169e1; }
+        
+        /* Weihnachtsmann Animation */
+        .santa-container {
+            position: fixed;
+            top: 50%;
+            left: -200px;
+            width: 200px;
+            height: 200px;
+            z-index: -1;
+            animation: flySanta 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes flySanta {
+            0% {
+                transform: translateX(-200px) translateY(0);
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px)) translateY(-100px);
+            }
+        }
+        
+        .santa {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        
+        .santa-body {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #ff0000;
+            border-radius: 50%;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .santa-face {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #ffcc99;
+            border-radius: 50%;
+            top: 10px;
+            left: 30px;
+        }
+        
+        .santa-hat {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 40px solid #ff0000;
+            top: 0;
+            left: 25px;
+        }
+        
+        .santa-hat::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 35px;
+            left: -10px;
+        }
+        
+        /* Schnee Animation */
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(0.5px);
+            animation: snowfall linear infinite;
+        }
+        
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-10px) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) translateX(20px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Hauptbereich */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section mit mehr Abstand oben */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px 40px; /* Mehr Padding oben (80px statt 40px) */
+            position: relative;
+        }
+        
+        .greeting-box {
+            max-width: 900px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 50px;
+            margin-top: 40px; /* Extra Abstand von oben */
+        }
+        
+        .greeting {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 
+                3px 3px 0 #d90429,
+                6px 6px 20px rgba(217, 4, 41, 0.5);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        /* Button Container */
+        .button-container {
+            margin-top: 40px;
+            position: relative;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gift-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #0a5c36;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                0 0 0 4px rgba(255, 255, 255, 0.1),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .gift-button.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .gift-button:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 
+                0 15px 30px rgba(0, 0, 0, 0.3),
+                0 0 0 6px rgba(255, 255, 255, 0.2),
+                inset 0 0 30px rgba(255, 255, 255, 0.4);
+            color: #d90429;
+        }
+        
+        .gift-button i {
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .gift-button:hover i {
+            transform: translateX(5px);
+        }
+        
+        .gift-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .gift-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Große Lücke zwischen Button und Ticket */
+        .spacer {
+            height: 400px;
+            width: 100%;
+        }
+        
+        /* Ticket Section */
+        .ticket-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 20px 200px;
+            position: relative;
+        }
+        
+        .ticket-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .ticket-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 
+                2px 2px 0 #d90429,
+                4px 4px 15px rgba(217, 4, 41, 0.4);
+            margin-bottom: 15px;
+        }
+        
+        .ticket-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+        }
+        
+        /* Ticket Container - QR Code NOCH kleiner */
+        .ticket-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.25),
+                0 0 0 8px rgba(217, 4, 41, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ticket-container::before {
+            content: '🎄';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            z-index: 1;
+        }
+        
+        .ticket-image-container {
+            width: 100%;
+            max-width: 250px; /* QR Code NOCH kleiner (vorher 400px) */
+            margin: 0 auto 25px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ticket-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            transition: transform 0.5s ease;
+        }
+        
+        .ticket-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .ticket-message {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(217, 4, 41, 0.1), rgba(13, 153, 87, 0.1));
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 4px solid #d90429;
+            position: relative;
+            min-height: 120px;
+        }
+        
+        .ticket-message p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #0a5c36;
+            line-height: 1.4;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .heart-pulse {
+            color: #d90429;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 25px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            margin-top: 80px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer p {
+            opacity: 0.9;
+            font-size: 1.2rem;
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .greeting {
+                font-size: 3.2rem;
+            }
+            
+            .ticket-title {
+                font-size: 2.5rem;
+            }
+            
+            .ticket-container {
+                max-width: 90%;
+                padding: 20px;
+            }
+            
+            .ticket-image-container {
+                max-width: 200px;
+            }
+            
+            .ticket-message p {
+                font-size: 1.5rem;
+            }
+            
+            .ticket-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .spacer {
+                height: 300px;
+            }
+            
+            .christmas-tree {
+                width: 300px;
+            }
+            
+            .christmas-ornaments {
+                width: 300px;
+            }
+            
+            .santa-container {
+                transform: scale(0.7);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .greeting {
+                font-size: 2.5rem;
+            }
+            
+            .gift-button {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .ticket-title {
+                font-size: 2rem;
+            }
+            
+            .ticket-message p {
+                font-size: 1.3rem;
+            }
+            
+            .ticket-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .spacer {
+                height: 200px;
+            }
+            
+            .ticket-image-container {
+                max-width: 180px;
+            }
+            
+            .christmas-tree {
+                width: 250px;
+            }
+            
+            .christmas-ornaments {
+                width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Weihnachtsbaum-Hintergrund -->
+    <div class="christmas-tree-container">
+        <div class="christmas-tree"></div>
+        <div class="christmas-ornaments" id="ornamentsContainer"></div>
+    </div>
+    
+    <!-- Weihnachtsmann Animation -->
+    <div class="santa-container">
+        <div class="santa">
+            <div class="santa-hat"></div>
+            <div class="santa-face"></div>
+            <div class="santa-body"></div>
+        </div>
+    </div>
+    
+    <!-- Schnee -->
+    <div class="snow-container" id="snowContainer"></div>
+    
+    <!-- Hauptinhalt -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="greeting-box">
+                <h1 class="greeting">Frohe (verspätete) Weihnachten meine wundervolle Jenny</h1>
+            </div>
+            
+            <div class="button-container">
+                <a href="#ticket" class="gift-button" id="giftButton">
+                    Zum Geschenk <i class="fas fa-gift"></i>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Große Lücke zwischen Button und Ticket -->
+        <div class="spacer"></div>
+        
+        <!-- Ticket Section -->
+        <section class="ticket-section" id="ticket">
+            <div class="ticket-header">
+                <h2 class="ticket-title">Dein Weihnachtsgeschenk</h2>
+                <p class="ticket-subtitle">Zu zweit tauchen wir in neue Welten ein :)</p>
+            </div>
+            
+            <div class="ticket-container">
+                <div class="ticket-image-container">
+                    <!-- HIER DEIN QR-CODE/TICKET EINFÜGEN -->
+                    <img src="ticket.jpg" alt="Museum Tickets QR-Code" class="ticket-image" id="ticketImage">
+                    
+                    <!-- Falls kein Bild vorhanden: -->
+                    <!--
+                    <div style="background: #f0f0f0; padding: 40px 15px; border-radius: 8px; text-align: center;">
+                        <i class="fas fa-qrcode" style="font-size: 2.5rem; color: #0a5c36; margin-bottom: 10px;"></i>
+                        <p style="color: #666; font-size: 0.9rem;">
+                            Hier wird der QR-Code angezeigt<br>
+                            Lade ein Bild hoch als "ticket.jpg"
+                        </p>
+                    </div>
+                    -->
+                </div>
+                
+                <div class="ticket-message">
+                    <p>Auch wenn es noch dauern wird, bis wir gemeinsam dorthin können, ich kann es kaum erwarten <span class="heart-pulse">❤️</span></p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="main-container">
+            <p>HDGDL cutie</p>
+        </div>
+    </footer>
+
+    <script>
+        // Christkugeln am Baum erstellen
+        const ornamentsContainer = document.getElementById('ornamentsContainer');
+        const ornamentCount = 15;
+        
+        for (let i = 0; i < ornamentCount; i++) {
+            const ornament = document.createElement('div');
+            ornament.classList.add('ornament');
+            
+            // Zufällige Position am Baum
+            const left = Math.random() * 300 + 50; // Zwischen 50px und 350px
+            const top = Math.random() * 300 + 100; // Zwischen 100px und 400px
+            
+            ornament.style.left = `${left}px`;
+            ornament.style.top = `${top}px`;
+            
+            // Zufällige Farbe
+            const colors = ['red', 'gold', 'silver', 'blue'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            ornament.classList.add(randomColor);
+            
+            // Zufällige Animationsverzögerung
+            ornament.style.animationDelay = `${Math.random() * 3}s`;
+            
+            ornamentsContainer.appendChild(ornament);
+        }
+        
+        // Schneeflocken erstellen
+        const snowContainer = document.getElementById('snowContainer');
+        const snowflakeCount = 60;
+        
+        for (let i = 0; i < snowflakeCount; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            
+            const size = Math.random() * 8 + 2;
+            snowflake.style.width = `${size}px`;
+            snowflake.style.height = `${size}px`;
+            
+            snowflake.style.left = `${Math.random() * 100}vw`;
+            
+            const duration = Math.random() * 10 + 5;
+            const delay = Math.random() * 5;
+            snowflake.style.animationDuration = `${duration}s`;
+            snowflake.style.animationDelay = `${delay}s`;
+            
+            snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+            
+            snowContainer.appendChild(snowflake);
+        }
+        
+        // Button erscheint beim Scrollen
+        const giftButton = document.getElementById('giftButton');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                giftButton.classList.add('visible');
+            } else {
+                giftButton.classList.remove('visible');
+            }
+        });
+        
+        // Smooth Scroll zum Ticket-Bereich
+        giftButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            giftButton.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                giftButton.style.transform = 'scale(1)';
+            }, 200);
+            
+            setTimeout(() => {
+                const target = document.getElementById('ticket');
+                const targetPosition = target.offsetTop - 100;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }, 300);
+        });
+        
+        // Bild-Ladeeffekt
+        const ticketImage = document.getElementById('ticketImage');
+        if (ticketImage) {
+            ticketImage.addEventListener('load', function() {
+                this.style.opacity = '0';
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    this.style.opacity = '1';
+                    this.style.transform = 'scale(1)';
+                }, 300);
+            });
+        }
+        
+        // Weihnachtsgruß in der Konsole
+        console.log('%c🎅 Frohe Weihnachten, Jenny! 🎁', 'font-size: 18px; color: #d90429; font-weight: bold; text-shadow: 2px 2px 0 #ffffff;');
+        console.log('%cHDGDL cutie ❤️', 'color: #0a5c36; font-size: 14px;');
+        
+        // Weihnachtsmann zufällig erscheinen lassen
+        setTimeout(() => {
+            document.querySelector('.santa-container').style.display = 'block';
+        }, 2000);
+        
+        // Initial Button anzeigen
+        setTimeout(() => {
+            giftButton.classList.add('visible');
+        }, 1000);
+    </script>
+</body>
+</html>
