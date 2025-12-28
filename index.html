@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ein Weihnachtsgeschenk für Jenny</title>
+    <!-- Weihnachtliche Schriftart von Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(to bottom, #0a2e1d, #1a3b2a, #0a2e1d);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Weihnachtliche Hintergrundelemente */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                radial-gradient(circle at 90% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* Schneeflocken Animation */
+        .snowflakes {
+            position: fixed;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        /* Hauptbereich mit Begrüßung */
+        .main-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .greeting {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 
+                3px 3px 5px rgba(0, 100, 0, 0.7),
+                -3px -3px 5px rgba(139, 0, 0, 0.7),
+                0 0 20px rgba(255, 255, 255, 0.3);
+            margin-bottom: 2rem;
+            max-width: 900px;
+            line-height: 1.2;
+            padding: 20px;
+            background: rgba(10, 46, 29, 0.6);
+            border-radius: 20px;
+            border: 2px solid rgba(218, 165, 32, 0.3);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Der besondere Button - zunächst versteckt */
+        .gift-button {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 25px 50px;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: gold;
+            background: linear-gradient(45deg, #b30000, #006400);
+            border: 4px solid gold;
+            border-radius: 50%;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 1s ease-out;
+            box-shadow: 
+                0 0 30px rgba(255, 215, 0, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+            font-family: 'Cormorant Garamond', serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gift-button.visible {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .gift-button:hover {
+            background: linear-gradient(45deg, #006400, #b30000);
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.8),
+                inset 0 0 30px rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+        
+        .gift-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+        
+        /* Ticket-Bereich */
+        .ticket-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            text-align: center;
+            background: rgba(26, 59, 42, 0.8);
+            border-top: 3px solid gold;
+            position: relative;
+        }
+        
+        .ticket-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: gold;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .ticket-container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+            border: 5px solid #b30000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ticket-container::before {
+            content: "🎁";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            z-index: 1;
+        }
+        
+        .ticket-image {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid #006400;
+        }
+        
+        .ticket-description {
+            color: #333;
+            font-size: 1.4rem;
+            margin-top: 20px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .heart {
+            color: #b30000;
+            font-size: 2rem;
+            margin: 0 10px;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .greeting {
+                font-size: 3rem;
+                padding: 15px;
+            }
+            
+            .gift-button {
+                font-size: 1.8rem;
+                padding: 20px 40px;
+            }
+            
+            .ticket-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .greeting {
+                font-size: 2.2rem;
+            }
+            
+            .gift-button {
+                font-size: 1.4rem;
+                padding: 15px 30px;
+            }
+            
+            .ticket-title {
+                font-size: 2rem;
+            }
+            
+            .ticket-description {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Hinweis am Ende */
+        .footer-note {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Schneeflocken -->
+    <div class="snowflakes" id="snowflakes"></div>
+    
+    <!-- Hauptbereich mit Begrüßung -->
+    <section class="main-section">
+        <h1 class="greeting">Frohe (verspätete) Weihnachten meine wundervolle Jenny</h1>
+        
+        <!-- Der Button erscheint erst beim Scrollen -->
+        <a href="#ticket" class="gift-button" id="giftButton">Zum Geschenk</a>
+    </section>
+    
+    <!-- Ticket-Bereich -->
+    <section class="ticket-section" id="ticket">
+        <h2 class="ticket-title">Dein Weihnachtsgeschenk <span class="heart">❤️</span></h2>
+        
+        <div class="ticket-container">
+            <!-- HIER MUSST DU DEIN TICKET-BILD EINFÜGEN -->
+            <!-- Option 1: Bild von deinem Computer/Handy -->
+            <!-- 1. Mach einen Screenshot von den Tickets -->
+            <!-- 2. Speichere ihn als 'ticket.jpg' oder 'ticket.png' -->
+            <!-- 3. Lade die Datei in dein GitHub Repository -->
+            <!-- 4. Ändere den src-Pfad unten zum Dateinamen -->
+            
+            <img src="ticket.jpg" alt="Museum Tickets" class="ticket-image" id="ticketImage">
+            
+            <!-- FALLS KEIN BILD VORHANDEN IST: -->
+            <!-- Entferne die obige img-Zeile und verwende stattdessen diesen Platzhalter: -->
+            <!--
+            <div style="background: #f0f0f0; padding: 60px 20px; border-radius: 10px; margin: 20px 0;">
+                <p style="color: #666; font-size: 1.5rem;">
+                    Hier würden deine Museumstickets erscheinen!<br>
+                    Lade einfach ein Bild deiner Tickets in dieses Repository hoch<br>
+                    und nenne es "ticket.jpg"
+                </p>
+            </div>
+            -->
+            
+            <p class="ticket-description">
+                Gemeinsam einen schönen Tag im Museum verbringen - 
+                ich freue mich schon so sehr darauf, diese Zeit mit dir zu verbringen! 
+                <span class="heart">❤️</span>
+            </p>
+        </div>
+        
+        <p class="footer-note">Mit aller Liebe zu Weihnachten</p>
+    </section>
+
+    <script>
+        // Schneeflocken erstellen
+        const snowflakesContainer = document.getElementById('snowflakes');
+        const snowflakeCount = 50;
+        
+        for (let i = 0; i < snowflakeCount; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.width = Math.random() * 10 + 5 + 'px';
+            snowflake.style.height = snowflake.style.width;
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 5 + 5 + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+            snowflakesContainer.appendChild(snowflake);
+        }
+        
+        // Button erscheint lassen, wenn gescrollt wird
+        const giftButton = document.getElementById('giftButton');
+        
+        window.addEventListener('scroll', function() {
+            // Wenn der Nutzer 100 Pixel nach unten scrollt, erscheint der Button
+            if (window.scrollY > 100) {
+                giftButton.classList.add('visible');
+            } else {
+                giftButton.classList.remove('visible');
+            }
+        });
+        
+        // Smooth Scroll zum Ticket-Bereich
+        giftButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.getElementById('ticket');
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+        
+        // Einfacher Effekt für den Ticket-Bereich
+        const ticketImage = document.getElementById('ticketImage');
+        if (ticketImage) {
+            ticketImage.addEventListener('load', function() {
+                this.style.opacity = '0';
+                setTimeout(() => {
+                    this.style.transition = 'opacity 1s ease-in-out';
+                    this.style.opacity = '1';
+                }, 500);
+            });
+        }
+        
+        // Weihnachtsgrüße in der Konsole
+        console.log('%c🎄 Frohe Weihnachten, Jenny! 🎄', 'color: #b30000; font-size: 18px; font-weight: bold;');
+        console.log('%cEin kleines digitales Geschenk mit viel Liebe gemacht ❤️', 'color: #006400; font-size: 14px;');
+    </script>
+</body>
+</html>
